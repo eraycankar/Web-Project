@@ -7,23 +7,26 @@ i18n.use(initReactI18next).init({
         en: {
             translations: {
                 'Sign Up': 'Sign Up',
+                'Email' : 'Email',
                 'Password mismatch': 'Password mismatch',
                 'Username' : 'Username',
                 'Password' : 'Password',
                 'Password Repeat' : 'Password Repeat',
-                'Email' : 'Email'
-
+                'Sign In': 'Sign In'
 
             }
         },
         tr: {
             translations: {
                 'Sign Up': 'Kayıt Ol',
-                'Password mismatch' : 'Şifreleriniz uyuşmuyor !',
+                'Sign In': 'Giriş Yap',
+                'Email' : 'E-Posta',
                 'Username': 'Kullanıcı Adı',
-                'Email' : 'Mail Adresi',
                 'Password': 'Şifre',
-                'Password Repeat': 'Şifreyi Tekrarla'
+                'Password Repeat': 'Şifreyi Tekrarla',
+                'Password mismatch' : 'Şifreleriniz uyuşmuyor !',
+                
+               
             }
         }
         

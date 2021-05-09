@@ -1,15 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import'./bootstrap-override.scss' 
 import reportWebVitals from './reportWebVitals';
-import SignupPage from './pages/SignupPage';
-import LoginPage from './pages/SignInPage';
 import './i18n';
+import App from './container/App'
 
 
-ReactDOM.render(<LoginPage/>,
+ReactDOM.render(<App/>,
   document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function

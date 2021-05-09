@@ -14,7 +14,7 @@ public class UserService {
 	
 	
 	//Bir class da sadece 1 tane constructor varsa '@Autowired' yazmaya gerek yok
-	public UserService(UserRepository userRepository) {
+	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = new BCryptPasswordEncoder();
 	}

@@ -1,4 +1,4 @@
-package com.shiftplan.ws;
+package com.shiftplan.ws.shared;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
