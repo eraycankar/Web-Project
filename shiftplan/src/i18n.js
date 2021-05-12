@@ -12,7 +12,9 @@ i18n.use(initReactI18next).init({
                 'Username' : 'Username',
                 'Password' : 'Password',
                 'Password Repeat' : 'Password Repeat',
-                'Sign In': 'Sign In'
+                'Sign In': 'Sign In',
+                'Sign Out' : 'Sign Out',
+                'Unauthorized':'Unauthorized'
 
             }
         },
@@ -20,12 +22,13 @@ i18n.use(initReactI18next).init({
             translations: {
                 'Sign Up': 'Kayıt Ol',
                 'Sign In': 'Giriş Yap',
+                'Sign Out': 'Çıkış Yap',
                 'Email' : 'E-Posta',
                 'Username': 'Kullanıcı Adı',
                 'Password': 'Şifre',
                 'Password Repeat': 'Şifreyi Tekrarla',
                 'Password mismatch' : 'Şifreleriniz uyuşmuyor !',
-                
+                'Unauthorized' : 'Kullanıcı Adı veya şifreniz hatalı'
                
             }
         }

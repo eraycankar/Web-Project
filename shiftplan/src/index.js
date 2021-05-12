@@ -5,9 +5,13 @@ import'./bootstrap-override.scss'
 import reportWebVitals from './reportWebVitals';
 import './i18n';
 import App from './container/App'
+// import AuthenticationContext from './shared/AuthenticationContext'
 
 
-ReactDOM.render(<App/>,
+ReactDOM.render(
+//<AuthenticationContext>
+<App/>,
+//</AuthenticationContext>,
   document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function

@@ -2,14 +2,16 @@ import React from 'react'
 import {login} from '../api/apiCalls'
 import {withTranslation} from 'react-i18next'
 import Input from '../components/Input'
-import '../css/signup.css'
+import '../css/signin.css'
 import pic1 from '../2.png'
 import pic2 from '../3.jpg'
 import ButtonWithProgress from '../components/ButtonWithProgress'
 import { withApiProgress } from '../shared/ApiProgress'
+// import {Authentication} from '../shared/AuthenticationContext'
 
 
 class SignInPage extends React.Component {
+    // static contextType = Authentication;
 
     state = {
         username : null,
@@ -34,12 +36,26 @@ class SignInPage extends React.Component {
         const creds = {
             username ,
             password 
-        }
+        };
+        const onSignInSuccess = () => {};
+        const { push } = this.props.history;
         this.setState({
             error: null
         });
         try{
-            await login(creds)
+            const response = await login(creds)
+            push('/');
+            
+
+            const authState = {
+                ///...response.data,
+                username: username,
+                password: password,
+                displayName: response.data.username,
+                image: response.data.image,
+            }
+
+            onSignInSuccess(authState);
         } catch(apiError){
             this.setState({
                 error:apiError.response.data.message
@@ -74,12 +90,12 @@ class SignInPage extends React.Component {
                     </div>
                     <div className = "col-md-6">
                         <h2 className ="signin-text mb-3">{t('Sign In')}</h2>
-                        <form style={{marginTop:'15%'}}>
+                        <form style={{marginTop:'10%'}}>
                             <div className ="form-group">
                                 <Input name = "username"  label = {t("Username")}  onChange={this.onChange}/>
                                 <Input name = "password" label = {t("Password")} type ="password" onChange={this.onChange}/>
-                                {error && <div className="alert alert-danger" role="alert">
-                                    {error}
+                                {error && <div className="alert validation-alert" role="alert" >
+                                    {t("Unauthorized")}
                                 </div>}
 
                                 <div className="text-center">
