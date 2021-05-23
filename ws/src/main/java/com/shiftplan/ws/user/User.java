@@ -15,8 +15,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.shiftplan.ws.shared.Views;
+
 
 import lombok.Data;
 
@@ -37,20 +36,20 @@ public class User implements UserDetails {
 	@NotNull(message = "{shiftplan.constraint.username.NotNull.message}")
 	@Size(min = 4 ,max = 20)
 	@UniqueUsername
-	@JsonView(Views.Base.class)
 	private String username;
 	
 	@Email
 	@NotNull(message = "{shiftplan.constraint.email.NotNull.message}")
-	@JsonView(Views.Base.class)
+	
 	private String email;
 	
 	@NotNull(message = "{shiftplan.constraint.password.NotNull.message}")
 	@Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*$" ,message = "{shiftplan.constraint.password.Pattern.message}")
 	private String password;
 
-	@JsonView(Views.Base.class)
+	
 	private String image;
+	
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

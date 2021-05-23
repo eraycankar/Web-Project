@@ -1,14 +1,14 @@
 import React from 'react'
 import {changeLanguage} from '../api/apiCalls'
-import {withTranslation} from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import TR_Flag from '../TR_Flag.png'
 import UK_Flag from '../UK_Flag.png'
 
 const LanguageSelector = (props) => {
 
-    
+    const {i18n} = useTranslation();
     const onChangeLanguage = language =>{
-        const {i18n} = props;
+       
         i18n.changeLanguage(language);
         changeLanguage(language);
     }
@@ -23,4 +23,4 @@ const LanguageSelector = (props) => {
     )
 }
 
-export default withTranslation()(LanguageSelector);
+export default LanguageSelector;

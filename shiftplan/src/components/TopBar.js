@@ -1,17 +1,46 @@
-import React, { Component } from "react";
+import React,{useState,useEffect, useRef} from "react";
 import logo from "../assets/shiftplan_1.png";
 import { Link } from "react-router-dom";
-import { withTranslation } from "react-i18next";
-// import { Authentication } from "../shared/AuthenticationContext";
+import { useDispatch, useSelector } from "react-redux";
+import {signoutSuccess} from "../redux/authAction.js"
+import { useTranslation } from "react-i18next";
+import ProfileImageWithDefault from "./ProfileImageWithDefault";
 
-class TopBar extends Component {
-  // static contextType = Authentication;
+const TopBar = props => {
 
-  render() {
-    const { t } = this.props;
-    const onSignOutSuccess  = () => {};
-    const isSignedIn= false;
-    const username  = undefined;
+    const {t} = useTranslation();
+    const { username , isSignedIn , image} = useSelector((store) => ({
+      
+        isSignedIn: store.isSignedIn,
+        username: store.username,
+        image: store.image
+      
+    }));
+
+    const menuArea = useRef(null);
+
+    const [menuVisible,setMenuVisible] = useState(false);
+
+    useEffect(() => {
+        document.addEventListener('click',menuClickTracker);
+        return () => {
+          document.removeEventListener('click', menuClickTracker);
+        }
+      },[isSignedIn]);
+
+    const menuClickTracker = (event) => {
+      if(menuArea.current === null || !menuArea.current.contains(event.target)){
+        setMenuVisible(false);
+      }
+    }
+
+    const dispatch = useDispatch();
+    
+    const  onSignoutSuccess  = () => {
+      dispatch(signoutSuccess());
+    };
+    
+    
     let links = (
       <ul className="navbar-nav ml-auto">
         <li>
@@ -27,19 +56,41 @@ class TopBar extends Component {
       </ul>
     );
     if (isSignedIn) {
+      let dropDownClass = 'dropdown-menu p-0 shadow'
+      if(menuVisible){
+        dropDownClass +=' show';
+      }
+
       links = (
-        <ul className="navbar-nav ml-auto">
-          <li>
-            <Link className="nav-link" to={`/user/${username}`}>
-              {username}
-            </Link>
-          </li>
-          <li
-            className="nav-link"
-            onClick={onSignOutSuccess}
-            style={{ cursor: "pointer" }}
-          >
-            {t("Sign Out")}
+        <ul className="navbar-nav ml-auto" ref = {menuArea}>
+          <Link to={`/myshifts/${username}`} className="nav-link d-flex mr-4" replace>
+              MyShifts
+          </Link>
+          <li className="nav-item dropdown">
+            <div className="d-flex"  style={{ cursor: "pointer" }} onClick={()=>{setMenuVisible(true)}}>
+              <ProfileImageWithDefault image = {image} width="32" height="32" className="rounded-circle m-auto"/>
+              <span className="nav-link dropdown-toggle">{username}</span>
+            </div>
+            <div className={dropDownClass}>
+              <Link className="dropdown-item d-flex p-2" to={`/user/${username}`}>
+                <span className="material-icons text-warning mr-2">
+                  person
+                </span>
+                {t('My Profile')}
+              </Link>
+
+              <Link
+               to ="/signin"
+                className="dropdown-item d-flex p-2"
+                onClick={onSignoutSuccess}
+                style={{ cursor: "pointer" }}
+              >
+                <span className="material-icons text-danger mr-2">
+                  logout
+                </span>
+                {t("Sign Out")}
+              </Link>
+            </div>
           </li>
         </ul>
       );
@@ -55,7 +106,21 @@ class TopBar extends Component {
         </nav>
       </div>
     );
-  }
+  
 }
 
-export default withTranslation()(TopBar);
+// const mapStateToProps = store => {
+//   return {
+//     isSignedIn: store.isSignedIn,
+//     username: store.username
+//   }
+// }
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     onSignoutSuccess: () => dispatch(signoutSuccess())
+//     };
+// }
+
+export default TopBar;
+ 

@@ -14,7 +14,17 @@ i18n.use(initReactI18next).init({
                 'Password Repeat' : 'Password Repeat',
                 'Sign In': 'Sign In',
                 'Sign Out' : 'Sign Out',
-                'Unauthorized':'Unauthorized'
+                'Unauthorized':'Unauthorized',
+                'Next': 'Next >',
+                'Previous':'< Previous',
+                'Load Failure' : 'Load Failure',
+                'Employee List': 'Employee List',
+                'User not found': 'User not found',
+                'Edit':'Edit',
+                'Save': 'Save',
+                'Cancel': 'Cancel',
+                'Change Email':'Change Email',
+                'My Profile': 'My Profile'
 
             }
         },
@@ -28,7 +38,17 @@ i18n.use(initReactI18next).init({
                 'Password': 'Şifre',
                 'Password Repeat': 'Şifreyi Tekrarla',
                 'Password mismatch' : 'Şifreleriniz uyuşmuyor !',
-                'Unauthorized' : 'Kullanıcı Adı veya şifreniz hatalı'
+                'Unauthorized' : 'Kullanıcı Adı veya şifreniz hatalı',
+                'Next': 'Sonraki >',
+                'Previous':'< Önceki',
+                'Load Failure' : 'Liste Bilgisi Alınamadı',
+                'Employee List': 'Çalışan Listesi',
+                'User not found': 'Kullanıcı Bulunamadı',
+                'Edit': 'Düzenle',
+                'Save' : 'Kaydet' ,
+                'Cancel' : 'İptal Et',
+                'Change Email':'Email Adresini Değiştir',
+                'My Profile':'Profilim'
                
             }
         }

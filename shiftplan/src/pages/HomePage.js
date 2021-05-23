@@ -1,9 +1,10 @@
 import React from 'react';
+import EmployeeList from '../components/EmployeeList'
 
 const HomePage = () => {
     return (
         <div className="container">
-            HomePage
+            <EmployeeList/>
         </div>
     );
 };

@@ -5,8 +5,8 @@ export const Authentication = React.createContext();
 class AuthenticationContext extends Component {
 
     state = {
-        isSignedIn : false,
-        username : undefined,
+        isSignedIn : true,
+        username : 'Salimalitiko',
         displayName: undefined,
         image: undefined,
         password: undefined

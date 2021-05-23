@@ -1,74 +1,63 @@
-import React from 'react'
-import {login} from '../api/apiCalls'
-import {withTranslation} from 'react-i18next'
+import React,{useState,useEffect} from 'react'
+import {useTranslation} from 'react-i18next'
 import Input from '../components/Input'
 import '../css/signin.css'
 import pic1 from '../2.png'
 import pic2 from '../3.jpg'
 import ButtonWithProgress from '../components/ButtonWithProgress'
-import { withApiProgress } from '../shared/ApiProgress'
+import { useApiProgress } from '../shared/ApiProgress'
+import { useDispatch } from "react-redux"
+import { loginHandler } from '../redux/authAction'
+
 // import {Authentication} from '../shared/AuthenticationContext'
 
 
-class SignInPage extends React.Component {
+const SignInPage = props =>{
     // static contextType = Authentication;
 
-    state = {
-        username : null,
-        password : null,
-        error: null,
-        pendingApiCall: null
-    }
-
-   
+    const [username, setUsername] = useState();
+    const [password,setPassword] = useState();
+    const [error , setError] = useState();
     
-    onChange = event =>{
-        const {name , value} = event.target;
-        this.setState({
-            [name]: value,
-            error: null
-        })
-    };
+    const  dispatch = useDispatch();
 
-    onClickLogin = async  event => {
+    useEffect(() => {
+        setError(undefined)
+    }, [username,password])
+
+
+    const onClickSignin = async  event => {
         event.preventDefault();
-        const {username,password} = this.state;
+        
         const creds = {
             username ,
             password 
         };
-        const onSignInSuccess = () => {};
-        const { push } = this.props.history;
-        this.setState({
-            error: null
-        });
+        const { history } = props;
+        const { push } = history;
+        // this.setState({
+        //     error: null
+        // });
+
+        setError(undefined);
         try{
-            const response = await login(creds)
+            await dispatch(loginHandler(creds))
+            console.log(creds.role);
             push('/');
-            
 
-            const authState = {
-                ///...response.data,
-                username: username,
-                password: password,
-                displayName: response.data.username,
-                image: response.data.image,
-            }
-
-            onSignInSuccess(authState);
         } catch(apiError){
-            this.setState({
-                error:apiError.response.data.message
-            })
+            setError(apiError.response.data.message);
+            // this.setState({
+            //     error:apiError.response.data.message
+            // })
         }
        
 
     }
 
-    render() {
-        
-        const { t, pendingApiCall } = this.props;
-        const {username,password,error} = this.state;
+    
+        const { t } = useTranslation();
+        const  pendingApiCall  = useApiProgress('post','/api/1.0/auth');
 
         const buttonEnabled = username && password;
 
@@ -92,15 +81,15 @@ class SignInPage extends React.Component {
                         <h2 className ="signin-text mb-3">{t('Sign In')}</h2>
                         <form style={{marginTop:'10%'}}>
                             <div className ="form-group">
-                                <Input name = "username"  label = {t("Username")}  onChange={this.onChange}/>
-                                <Input name = "password" label = {t("Password")} type ="password" onChange={this.onChange}/>
+                                <Input name = "username"  label = {t("Username")}  onChange={(event) => setUsername(event.target.value)}/>
+                                <Input name = "password" label = {t("Password")} type ="password" onChange={(event) => setPassword(event.target.value)}/>
                                 {error && <div className="alert validation-alert" role="alert" >
                                     {t("Unauthorized")}
                                 </div>}
 
                                 <div className="text-center">
 
-                                    <ButtonWithProgress  disabled={!buttonEnabled || pendingApiCall}  onClick= {this.onClickLogin} pendingApiCall= {pendingApiCall} text= {t("Sign In")} />
+                                    <ButtonWithProgress  disabled={!buttonEnabled || pendingApiCall}  onClick= {onClickSignin} pendingApiCall= {pendingApiCall} text= {t("Sign In")} />
                                     
 
                                 </div>
@@ -113,9 +102,10 @@ class SignInPage extends React.Component {
          </div>
             
         )
-    }
+    
 }
-const SignInPageWithTranslation = withTranslation()(SignInPage);
 
-export default withApiProgress(SignInPageWithTranslation,'/api/1.0/auth');
+
+export default SignInPage;
+
 

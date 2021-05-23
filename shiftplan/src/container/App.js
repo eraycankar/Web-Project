@@ -4,19 +4,17 @@ import SignUpPage from '../pages/SignUpPage'
 import SignInPage from '../pages/SignInPage'
 import HomePage from '../pages/HomePage'
 import UserPage from '../pages/UserPage'
+import ShiftPage from '../pages/ShiftPage'
 import { HashRouter as Router,Route,Redirect,Switch} from 'react-router-dom'
-import { login } from '../api/apiCalls';
 import TopBar from '../components/TopBar';
-// import {Authentication} from '../shared/AuthenticationContext'
+import { useSelector } from 'react-redux'
 
 
-class App extends React.Component {
 
-  // static contextType = Authentication;
+const App = () => {
+
+  const {isSignedIn } = useSelector((store) => ({isSignedIn:store.isSignedIn}));
   
-  render(){
-    const isSignedIn = false;
-
     return (
     <div>
       <Router>
@@ -28,14 +26,23 @@ class App extends React.Component {
           {!isSignedIn &&(
           <Route path = "/signup" component ={SignUpPage}/>
           )}
+          <Route path ="/myshifts/:username" component = {ShiftPage}/>
           <Route path = "/user/:username" component = {UserPage}/>
+          
           <Redirect to="/" />
         </Switch>
       </Router>
       <LanguageSelector/> 
     </div>
   );
-  }
+  
 }
+
+// const mapStateToProps = store => {
+//   return {
+//     isSignedIn: store.isSignedIn
+//   }
+// }
+
 
 export default App;
